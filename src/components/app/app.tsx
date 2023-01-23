@@ -16,7 +16,7 @@ function App(): JSX.Element {
           element={<Main />}
         />
         <Route
-          path={AppRoute.Quest}
+          path={`${AppRoute.Quest}/:id`}
           element={<Quest />}
         />
         <Route
