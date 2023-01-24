@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { store } from './store';
-import { fetchQuestsAction } from './store/api-actions';
+import { fetchQuestsAction } from './store/quests/api-actions';
 
 store.dispatch(fetchQuestsAction());
 

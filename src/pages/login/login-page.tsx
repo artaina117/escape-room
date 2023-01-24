@@ -1,7 +1,7 @@
 import React from 'react';
 import SvgCollection from '../../components/svg-collction/svg-collection';
 
-function Contacts(): JSX.Element {
+function LoginPage(): JSX.Element {
   return (
     <React.Fragment>
       <SvgCollection />
@@ -16,65 +16,60 @@ function Contacts(): JSX.Element {
             <nav className="main-nav header__main-nav">
               <ul className="main-nav__list">
                 <li className="main-nav__item">
-                  <a className="link not-disabled" href="index.html">Квесты</a>
+                  <a className="link not-disabled active" href="index.html">Квесты</a>
                 </li>
                 <li className="main-nav__item">
-                  <a className="link active" href="contacts.html">Контакты</a>
+                  <a className="link" href="contacts.html">Контакты</a>
                 </li>
               </ul>
             </nav>
             <div className="header__side-nav">
-              <a className="btn header__side-item header__login-btn" href="login.html">Вход</a>
               <a className="link header__side-item header__phone-link" href="tel:88003335599">8 (000) 111-11-11</a>
             </div>
           </div>
         </header>
-        <main className="page-content decorated-page">
+
+        <main className="decorated-page login">
           <div className="decorated-page__decor" aria-hidden="true">
             <picture>
-              <source type="image/webp" srcSet="img/content/maniac/maniac-bg-size-m.webp, img/content/maniac/maniac-bg-size-m@2x.webp 2x" />
-              <img src="img/content/maniac/maniac-bg-size-m.jpg" srcSet="img/content/maniac/maniac-bg-size-m@2x.jpg 2x" width="1366" height="1959" alt="" />
+              <source type="image/webp" srcSet="img/content/maniac/maniac-size-m.webp, img/content/maniac/maniac-size-m@2x.webp 2x" />
+              <img src="img/content/maniac/maniac-size-m.jpg" srcSet="img/content/maniac/maniac-size-m@2x.jpg 2x" width="1366" height="768" alt="" />
             </picture>
           </div>
-          <div className="container">
-            <div className="page-content__title-wrapper page-content__title-wrapper--underlined">
-              <p className="subtitle page-content__subtitle">квесты в&nbsp;Санкт-Петербурге
-              </p>
-              <h1 className="title title--size-m page-content__title">Контакты</h1>
-            </div>
-            <div className="contacts">
-              <dl className="contacts__list">
-                <div className="contacts__item">
-                  <dt className="contacts__dt">Адрес</dt>
-                  <dd className="contacts__dd">
-                    <address className="contacts__address">Санкт-Петербург,<br /> Набережная реки Карповка, д 5П</address>
-                  </dd>
+          <div className="container container--size-l">
+            <div className="login__form">
+              <form className="login-form" action="https://echo.htmlacademy.ru/" method="post">
+                <div className="login-form__inner-wrapper">
+                  <h1 className="title title--size-s login-form__title">Вход</h1>
+                  <div className="login-form__inputs">
+                    <div className="custom-input login-form__input">
+                      <label className="custom-input__label" htmlFor="email">E&nbsp;&ndash;&nbsp;mail</label>
+                      <input type="email" id="email" name="email" placeholder="Адрес электронной почты" required />
+                    </div>
+                    <div className="custom-input login-form__input">
+                      <label className="custom-input__label" htmlFor="password">Пароль</label>
+                      <input type="password" id="password" name="password" placeholder="Пароль" required />
+                    </div>
+                  </div>
+                  <button className="btn btn--accent btn--general login-form__submit" type="submit">Войти</button>
                 </div>
-                <div className="contacts__item">
-                  <dt className="contacts__dt">Режим работы</dt>
-                  <dd className="contacts__dd">Ежедневно, с&nbsp;10:00 до&nbsp;22:00</dd>
-                </div>
-                <div className="contacts__item">
-                  <dt className="contacts__dt">Телефон</dt>
-                  <dd className="contacts__dd">
-                    <a className="link" href="tel:88003335599">8 (000) 111-11-11</a>
-                  </dd>
-                </div>
-                <div className="contacts__item">
-                  <dt className="contacts__dt">E&ndash;mail</dt>
-                  <dd className="contacts__dd">
-                    <a className="link" href="mailto:info@escape-room.ru">info@escape-room.ru</a>
-                  </dd>
-                </div>
-              </dl>
-              <div className="contacts__map">
-                <div className="map">
-                  <div className="map__container"></div>
-                </div>
-              </div>
+                <label className="custom-checkbox login-form__checkbox">
+                  <input type="checkbox" id="id-order-agreement" name="user-agreement" required />
+                  <span className="custom-checkbox__icon">
+                    <svg width="20" height="17" aria-hidden="true">
+                      <use xlinkHref="#icon-tick"></use>
+                    </svg>
+                  </span>
+                  <span className="custom-checkbox__label">Я&nbsp;согласен с
+                    <a className="link link--active-silver link--underlined" href="#">правилами обработки персональных данных</a>
+                    &nbsp;и пользовательским соглашением
+                  </span>
+                </label>
+              </form>
             </div>
           </div>
         </main>
+
         <footer className="footer">
           <div className="container container--size-l">
             <div className="socials">
@@ -108,4 +103,4 @@ function Contacts(): JSX.Element {
   );
 }
 
-export default Contacts;
+export default LoginPage;

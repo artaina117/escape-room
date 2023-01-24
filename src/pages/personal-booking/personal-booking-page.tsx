@@ -1,7 +1,7 @@
 import React from 'react';
 import SvgCollection from '../../components/svg-collction/svg-collection';
 
-function PersonalBooking(): JSX.Element {
+function PersonalBookingPage(): JSX.Element {
   return (
     <React.Fragment>
       <SvgCollection />
@@ -155,4 +155,4 @@ function PersonalBooking(): JSX.Element {
   );
 }
 
-export default PersonalBooking;
+export default PersonalBookingPage;

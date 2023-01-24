@@ -1,16 +1,10 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, questLevelAdapter } from '../../const';
 import { Quest } from '../../types/quest';
 
 type QuestCardProps = {
   quest: Quest;
 }
-
-const levelAdapter = {
-  hard: 'сложный',
-  medium: 'средний',
-  easy: 'лёгкий',
-};
 
 function QuestCard({ quest }: QuestCardProps): JSX.Element {
   const {id, title, previewImg, previewImgWebp, level, peopleMinMax} = quest;
@@ -35,7 +29,8 @@ function QuestCard({ quest }: QuestCardProps): JSX.Element {
           <li className="tags__item">
             <svg width="14" height="14" aria-hidden="true">
               <use xlinkHref="#icon-level"></use>
-            </svg>{levelAdapter[level]}
+            </svg>
+            {questLevelAdapter[level]}
           </li>
         </ul>
       </div>

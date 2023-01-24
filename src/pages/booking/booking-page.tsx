@@ -1,7 +1,7 @@
 import React from 'react';
 import SvgCollection from '../../components/svg-collction/svg-collection';
 
-function Booking(): JSX.Element {
+function BookingPage(): JSX.Element {
   return (
     <React.Fragment>
       <SvgCollection />
@@ -63,7 +63,7 @@ function Booking(): JSX.Element {
                       <input type="radio" id="today9h45m" name="date" required value="today9h45m" /><span className="custom-radio__label">9:45</span>
                     </label>
                     <label className="custom-radio booking-form__date">
-                      <input type="radio" id="today15h00m" name="date" checked required value="today15h00m" /><span className="custom-radio__label">15:00</span>
+                      <input type="radio" id="today15h00m" name="date" defaultChecked required value="today15h00m" /><span className="custom-radio__label">15:00</span>
                     </label>
                     <label className="custom-radio booking-form__date">
                       <input type="radio" id="today17h30m" name="date" required value="today17h30m" /><span className="custom-radio__label">17:30</span>
@@ -170,4 +170,4 @@ function Booking(): JSX.Element {
   );
 }
 
-export default Booking;
+export default BookingPage;
