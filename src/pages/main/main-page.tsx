@@ -3,8 +3,8 @@ import FilterList from '../../components/filter-list/filter-list';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import QuestList from '../../components/quest-list/quest-list';
-import SvgCollection from '../../components/svg-collction/svg-collection';
-import { DEFAULT_GENRE, DEFAULT_LEVEL, PageNames } from '../../const';
+import SvgCollection from '../../components/svg-collection/svg-collection';
+import { DEFAULT_GENRE, DEFAULT_LEVEL } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getQuests, getQuestsGenreFilter, getQuestsLevelFilter } from '../../store/quests/selectors';
 import { changeActiveGenreFilter } from '../../store/quests/slice';
@@ -28,7 +28,7 @@ function MainPage(): JSX.Element {
     <React.Fragment>
       <SvgCollection />
       <div className="wrapper">
-        <Header pageName={PageNames.MainPage} />
+        <Header />
 
         <main className="page-content">
           <div className="container">

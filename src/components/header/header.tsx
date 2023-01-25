@@ -1,18 +1,21 @@
-import { PageNames } from '../../const';
+import { Link } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/user/selectors';
 
-type HeaderProps = {
-  pageName: PageNames;
-}
+function Header(): JSX.Element {
+  const AuthStatus = useAppSelector(getAuthorizationStatus);
 
-function Header({pageName}: HeaderProps): JSX.Element {
   return (
     <header className="header">
       <div className="container container--size-l">
-        <span className="logo header__logo">
-          <svg width="134" height="52" aria-hidden="true">
-            <use xlinkHref="#logo"></use>
-          </svg>
-        </span>
+        <Link to={AppRoute.Root}>
+          <span className="logo header__logo">
+            <svg width="134" height="52" aria-hidden="true">
+              <use xlinkHref="#logo"></use>
+            </svg>
+          </span>
+        </Link>
         <nav className="main-nav header__main-nav">
           <ul className="main-nav__list">
             <li className="main-nav__item">
@@ -21,10 +24,10 @@ function Header({pageName}: HeaderProps): JSX.Element {
             <li className="main-nav__item">
               <a className="link" href="contacts.html">Контакты</a>
             </li>
-            {pageName === PageNames.MainPage &&
-            <li className="main-nav__item">
-              <a className="link" href="my-quests.html">Мои бронирования</a>
-            </li>}
+            {AuthStatus === AuthorizationStatus.Auth &&
+              <li className="main-nav__item">
+                <a className="link" href="my-quests.html">Мои бронирования</a>
+              </li>}
           </ul>
         </nav>
         <div className="header__side-nav">

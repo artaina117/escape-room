@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { APIRoute } from '../../const';
+import { APIRoute, AppRoute } from '../../const';
 import { Quest } from '../../types/quest';
 import { CurrentQuest } from '../../types/current-quest';
 import { AppDispatch, State } from '../../types/state';
+import { redirectToRoute } from '../action';
 
 export const fetchQuestsAction = createAsyncThunk<Quest[], undefined, {
   dispatch: AppDispatch;
@@ -28,7 +29,7 @@ export const fetchCurrentQuestAction = createAsyncThunk<CurrentQuest | null, num
       const { data } = await api.get<CurrentQuest>(`${APIRoute.Quests}/${id}`);
       return data;
     } catch {
-      // dispatch(redirectToRoute(AppRoute.NotFound));
+      dispatch(redirectToRoute(AppRoute.NotFound));
       return null;
     }
   },

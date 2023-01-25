@@ -4,7 +4,9 @@ import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { store } from './store';
 import { fetchQuestsAction } from './store/quests/api-actions';
+import { checkAuthAction } from './store/user/api-actions';
 
+store.dispatch(checkAuthAction());
 store.dispatch(fetchQuestsAction());
 
 const root = ReactDOM.createRoot(

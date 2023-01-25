@@ -1,33 +1,55 @@
-import React from 'react';
-import SvgCollection from '../../components/svg-collction/svg-collection';
+import React, { FormEvent, useEffect, useRef } from 'react';
+import Footer from '../../components/footer/footer';
+import Header from '../../components/header/header';
+import SvgCollection from '../../components/svg-collection/svg-collection';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { redirectToRoute } from '../../store/action';
+import { loginAction } from '../../store/user/api-actions';
+import { getAuthorizationStatus } from '../../store/user/selectors';
+import { AuthData } from '../../types/auth-data';
 
 function LoginPage(): JSX.Element {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(redirectToRoute(AppRoute.Root));
+    }
+  }, [dispatch, authorizationStatus]);
+
+  const loginRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const passwordMask = /([0-9].*[a-z])|([a-z].*[0-9])/;
+
+  const onSubmit = (authData: AuthData) => {
+    dispatch(loginAction(authData));
+  };
+
+  const submitHandler = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (loginRef.current !== null && passwordRef.current !== null) {
+      const password = passwordRef.current.value.trim();
+
+      if (!password.length || !passwordMask.test(password)) {
+        // toast.warn('Password must contain at least one number and one letter');
+        return;
+      }
+
+      onSubmit({
+        login: loginRef.current.value,
+        password: passwordRef.current.value,
+      });
+    }
+  };
+
   return (
     <React.Fragment>
       <SvgCollection />
       <div className="wrapper">
-        <header className="header">
-          <div className="container container--size-l">
-            <a className="logo header__logo" href="index.html" aria-label="Перейти на Главную">
-              <svg width="134" height="52" aria-hidden="true">
-                <use xlinkHref="#logo"></use>
-              </svg>
-            </a>
-            <nav className="main-nav header__main-nav">
-              <ul className="main-nav__list">
-                <li className="main-nav__item">
-                  <a className="link not-disabled active" href="index.html">Квесты</a>
-                </li>
-                <li className="main-nav__item">
-                  <a className="link" href="contacts.html">Контакты</a>
-                </li>
-              </ul>
-            </nav>
-            <div className="header__side-nav">
-              <a className="link header__side-item header__phone-link" href="tel:88003335599">8 (000) 111-11-11</a>
-            </div>
-          </div>
-        </header>
+        <Header />
 
         <main className="decorated-page login">
           <div className="decorated-page__decor" aria-hidden="true">
@@ -38,17 +60,17 @@ function LoginPage(): JSX.Element {
           </div>
           <div className="container container--size-l">
             <div className="login__form">
-              <form className="login-form" action="https://echo.htmlacademy.ru/" method="post">
+              <form className="login-form" action="#" method="post" onSubmit={submitHandler}>
                 <div className="login-form__inner-wrapper">
                   <h1 className="title title--size-s login-form__title">Вход</h1>
                   <div className="login-form__inputs">
                     <div className="custom-input login-form__input">
                       <label className="custom-input__label" htmlFor="email">E&nbsp;&ndash;&nbsp;mail</label>
-                      <input type="email" id="email" name="email" placeholder="Адрес электронной почты" required />
+                      <input ref={loginRef} type="email" id="email" name="email" placeholder="Адрес электронной почты" required />
                     </div>
                     <div className="custom-input login-form__input">
                       <label className="custom-input__label" htmlFor="password">Пароль</label>
-                      <input type="password" id="password" name="password" placeholder="Пароль" required />
+                      <input ref={passwordRef} type="password" id="password" name="password" placeholder="Пароль" required />
                     </div>
                   </div>
                   <button className="btn btn--accent btn--general login-form__submit" type="submit">Войти</button>
@@ -70,34 +92,7 @@ function LoginPage(): JSX.Element {
           </div>
         </main>
 
-        <footer className="footer">
-          <div className="container container--size-l">
-            <div className="socials">
-              <ul className="socials__list">
-                <li className="socials__item">
-                  <a className="socials__link" href="#" aria-label="Skype" target="_blank" rel="nofollow noopener noreferrer">
-                    <svg className="socials__icon socials__icon--default" width="28" height="28" aria-hidden="true">
-                      <use xlinkHref="#icon-skype-default"></use>
-                    </svg>
-                    <svg className="socials__icon socials__icon--interactive" width="28" height="28" aria-hidden="true">
-                      <use xlinkHref="#icon-skype-interactive"></use>
-                    </svg>
-                  </a>
-                </li>
-                <li className="socials__item">
-                  <a className="socials__link" href="#" aria-label="ВКонтакте" target="_blank" rel="nofollow noopener noreferrer">
-                    <svg className="socials__icon socials__icon--default" width="28" height="28" aria-hidden="true">
-                      <use xlinkHref="#icon-vk-default"></use>
-                    </svg>
-                    <svg className="socials__icon socials__icon--interactive" width="28" height="28" aria-hidden="true">
-                      <use xlinkHref="#icon-vk-interactive"></use>
-                    </svg>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </React.Fragment>
   );

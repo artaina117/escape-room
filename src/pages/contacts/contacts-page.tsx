@@ -1,5 +1,5 @@
 import React from 'react';
-import SvgCollection from '../../components/svg-collction/svg-collection';
+import SvgCollection from '../../components/svg-collection/svg-collection';
 
 function ContactsPage(): JSX.Element {
   return (

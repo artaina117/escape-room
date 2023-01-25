@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import SvgCollection from '../../components/svg-collction/svg-collection';
-import { PageNames, questLevelAdapter, questTypeAdapter } from '../../const';
+import SvgCollection from '../../components/svg-collection/svg-collection';
+import { AppRoute, questLevelAdapter, questTypeAdapter } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCurrentQuestAction } from '../../store/quests/api-actions';
 import { getCurrentQuest } from '../../store/quests/selectors';
@@ -19,19 +19,19 @@ function QuestPage(): JSX.Element {
 
   const currentQuest = useAppSelector(getCurrentQuest);
 
-  const { title, type, level, peopleMinMax, description } = currentQuest;
+  const { title, type, level, peopleMinMax, description, coverImg, coverImgWebp} = currentQuest;
 
   return (
     <React.Fragment>
       <SvgCollection />
       <div className="wrapper">
-        <Header pageName={PageNames.QuestPage} />
+        <Header />
 
         <main className="decorated-page quest-page">
           <div className="decorated-page__decor" aria-hidden="true">
             <picture>
-              <source type="image/webp" srcSet="img/content/maniac/maniac-size-m.webp, img/content/maniac/maniac-size-m@2x.webp 2x" />
-              <img src="img/content/maniac/maniac-size-m.jpg" srcSet="img/content/maniac/maniac-size-m@2x.jpg 2x" width="1366" height="768" alt="" />
+              <source type="image/webp" srcSet={coverImgWebp} />
+              <img src={coverImg} width="1366" height="768" alt="" />
             </picture>
           </div>
           <div className="container container--size-l">
@@ -52,7 +52,7 @@ function QuestPage(): JSX.Element {
                 </li>
               </ul>
               <p className="quest-page__description">{description}</p>
-              <a className="btn btn--accent btn--cta quest-page__btn" href="booking.html">Забронировать</a>
+              <Link className="btn btn--accent btn--cta quest-page__btn" to={AppRoute.Booking}>Забронировать</Link>
             </div>
           </div>
         </main>

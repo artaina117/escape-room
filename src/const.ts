@@ -40,11 +40,8 @@ export enum QuestThemes {
 
 export enum APIRoute {
   Quests = '/escape-room/quest',
-}
-
-export enum PageNames {
-  QuestPage = 'questPage',
-  MainPage = 'mainpage',
+  Login = '/escape-room/login',
+  Logout = '/escape-room/logout',
 }
 
 export const questLevelAdapter = {

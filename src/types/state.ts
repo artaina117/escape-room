@@ -1,3 +1,4 @@
+import { AuthorizationStatus } from '../const';
 import { store } from '../store';
 import { CurrentQuest } from './current-quest';
 import { Quest } from './quest';
@@ -8,6 +9,11 @@ export type QuestsSlice = {
   activeGenreFilter: string,
   activeLevelFilter: string,
 };
+
+export type UserSlice = {
+  authorizationStatus: AuthorizationStatus;
+  email: string;
+}
 
 export type State = ReturnType<typeof store.getState>;
 
