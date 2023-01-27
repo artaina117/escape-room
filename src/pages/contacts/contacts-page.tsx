@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
@@ -7,6 +8,9 @@ import SvgCollection from '../../components/svg-collection/svg-collection';
 function ContactsPage(): JSX.Element {
   return (
     <React.Fragment>
+      <Helmet>
+        <title>Контакты | Escape Room</title>
+      </Helmet>
       <SvgCollection />
       <div className="wrapper">
         <Header />

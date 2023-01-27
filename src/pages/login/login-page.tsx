@@ -1,4 +1,6 @@
 import React, { FormEvent, useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { toast } from 'react-toastify';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import SvgCollection from '../../components/svg-collection/svg-collection';
@@ -34,7 +36,7 @@ function LoginPage(): JSX.Element {
       const password = passwordRef.current.value.trim();
 
       if (!password.length || !passwordMask.test(password)) {
-        // toast.warn('Password must contain at least one number and one letter');
+        toast.warn('Password must contain at least one number and one letter');
         return;
       }
 
@@ -47,6 +49,9 @@ function LoginPage(): JSX.Element {
 
   return (
     <React.Fragment>
+      <Helmet>
+        <title>Вход | Escape Room</title>
+      </Helmet>
       <SvgCollection />
       <div className="wrapper">
         <Header />

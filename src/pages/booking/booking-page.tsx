@@ -1,9 +1,13 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import SvgCollection from '../../components/svg-collection/svg-collection';
 
 function BookingPage(): JSX.Element {
   return (
     <React.Fragment>
+      <Helmet>
+        <title>Бронирование | Escape Room</title>
+      </Helmet>
       <SvgCollection />
       <div className="wrapper">
         <header className="header">

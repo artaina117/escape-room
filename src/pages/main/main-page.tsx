@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import FilterList from '../../components/filter-list/filter-list';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
@@ -26,6 +27,9 @@ function MainPage(): JSX.Element {
 
   return (
     <React.Fragment>
+      <Helmet>
+        <title>Каталог квестов | Escape Room</title>
+      </Helmet>
       <SvgCollection />
       <div className="wrapper">
         <Header />

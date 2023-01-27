@@ -3,9 +3,9 @@ import { Genre } from './types/genre';
 export const DEFAULT_GENRE = 'all';
 export const DEFAULT_LEVEL = 'any';
 
-export const VIEW_ZOOM = 50;
-export const URL_MARKER_DEFAULT = '/img/pin-default.svg';
-export const URL_MARKER_CURRENT = '/img/pin-active.svg';
+export const VIEW_ZOOM = 17;
+export const URL_MARKER_DEFAULT = '/img/svg/pin-default.svg';
+export const URL_MARKER_CURRENT = '/img/svg/pin-active.svg';
 
 export enum AuthorizationStatus {
   Auth = 'AUTH',

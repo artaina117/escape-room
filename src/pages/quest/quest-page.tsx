@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link, useParams } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
@@ -19,10 +20,13 @@ function QuestPage(): JSX.Element {
 
   const currentQuest = useAppSelector(getCurrentQuest);
 
-  const { title, type, level, peopleMinMax, description, coverImg, coverImgWebp} = currentQuest;
+  const { title, type, level, peopleMinMax, description, coverImg, coverImgWebp } = currentQuest;
 
   return (
     <React.Fragment>
+      <Helmet>
+        <title>{title} | Escape Room</title>
+      </Helmet>
       <SvgCollection />
       <div className="wrapper">
         <Header />
@@ -30,8 +34,8 @@ function QuestPage(): JSX.Element {
         <main className="decorated-page quest-page">
           <div className="decorated-page__decor" aria-hidden="true">
             <picture>
-              <source type="image/webp" srcSet={coverImgWebp} />
-              <img src={coverImg} width="1366" height="768" alt="" />
+              <source type="image/webp" srcSet={`${coverImgWebp}, ${coverImgWebp} 2x`} />
+              <img src={coverImg} srcSet={`${coverImg} 2x`} width="1366" height="768" alt="" />
             </picture>
           </div>
           <div className="container container--size-l">
