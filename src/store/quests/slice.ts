@@ -8,6 +8,7 @@ const initialState: QuestsSlice = {
   currentQuest: currentQuest,
   activeGenreFilter: DEFAULT_GENRE,
   activeLevelFilter: DEFAULT_LEVEL,
+  isQuestsDataLoading: false,
 };
 
 export const questsSlice = createSlice({
@@ -23,8 +24,12 @@ export const questsSlice = createSlice({
   },
   extraReducers(builder) {
     builder
+      .addCase(fetchQuestsAction.pending, (state) => {
+        state.isQuestsDataLoading = true;
+      })
       .addCase(fetchQuestsAction.fulfilled, (state, action) => {
         state.quests = action.payload;
+        state.isQuestsDataLoading = false;
       })
       .addCase(fetchCurrentQuestAction.fulfilled, (state, action) => {
         if (action.payload) {

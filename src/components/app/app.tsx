@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import browserHistory from '../../browser-history';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks';
 import BookingPage from '../../pages/booking/booking-page';
 import ContactsPage from '../../pages/contacts/contacts-page';
@@ -13,13 +13,24 @@ import { getAuthorizationStatus } from '../../store/user/selectors';
 import HistoryRouter from '../history-route/history-route';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
+import ScrollToTop from '../scroll-to-top/scroll-to-top';
+import LoadingPage from '../../pages/loading/loading-page';
+import { getIsQuestsDataLoading } from '../../store/quests/selectors';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isQuestsDataLoading = useAppSelector(getIsQuestsDataLoading);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown || isQuestsDataLoading) {
+    return (
+      <LoadingPage />
+    );
+  }
 
   return (
     <HelmetProvider>
       <HistoryRouter history={browserHistory}>
+        <ScrollToTop />
         <Routes>
           <Route
             path={AppRoute.Root}
@@ -34,8 +45,12 @@ function App(): JSX.Element {
             element={<LoginPage />}
           />
           <Route
-            path={AppRoute.Booking}
-            element={<BookingPage />}
+            path={`${AppRoute.Quest}/:id${AppRoute.Booking}`}
+            element={
+              <PrivateRoute authorizationStatus={authorizationStatus}>
+                <BookingPage />
+              </PrivateRoute>
+            }
           />
           <Route
             path={AppRoute.Contacts}

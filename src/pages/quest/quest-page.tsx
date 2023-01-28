@@ -4,10 +4,11 @@ import { Link, useParams } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import SvgCollection from '../../components/svg-collection/svg-collection';
-import { AppRoute, questLevelAdapter, questTypeAdapter } from '../../const';
+import { AppRoute, AuthorizationStatus, questLevelAdapter, questTypeAdapter } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCurrentQuestAction } from '../../store/quests/api-actions';
 import { getCurrentQuest } from '../../store/quests/selectors';
+import { getAuthorizationStatus } from '../../store/user/selectors';
 
 function QuestPage(): JSX.Element {
   const { id } = useParams();
@@ -19,6 +20,7 @@ function QuestPage(): JSX.Element {
   }, [currentQuestId, dispatch]);
 
   const currentQuest = useAppSelector(getCurrentQuest);
+  const AuthStatus = useAppSelector(getAuthorizationStatus);
 
   const { title, type, level, peopleMinMax, description, coverImg, coverImgWebp } = currentQuest;
 
@@ -56,7 +58,7 @@ function QuestPage(): JSX.Element {
                 </li>
               </ul>
               <p className="quest-page__description">{description}</p>
-              <Link className="btn btn--accent btn--cta quest-page__btn" to={AppRoute.Booking}>Забронировать</Link>
+              <Link className="btn btn--accent btn--cta quest-page__btn" to={AuthStatus === AuthorizationStatus.Auth ? `${AppRoute.Quest}/:${currentQuestId}${AppRoute.Booking}` : AppRoute.Login}>Забронировать</Link>
             </div>
           </div>
         </main>

@@ -7,6 +7,11 @@ export const VIEW_ZOOM = 17;
 export const URL_MARKER_DEFAULT = '/img/svg/pin-default.svg';
 export const URL_MARKER_CURRENT = '/img/svg/pin-active.svg';
 
+export const REGEX = {
+  email: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/gm,
+  password:/([0-9].*[a-z])|([a-z].*[0-9])/,
+};
+
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
@@ -17,7 +22,7 @@ export enum AppRoute {
   Root = '/',
   Login = '/login',
   Booking = '/booking',
-  PersonalBooking = '/reservation',
+  PersonalBooking = '/my-quests',
   Quest = '/quest',
   Contacts = '/contacts',
   NotFound = '*',

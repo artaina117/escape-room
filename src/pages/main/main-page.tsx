@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import EmptyQuestsList from '../../components/empty-quest-list/empty-quest-list';
 import FilterList from '../../components/filter-list/filter-list';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
@@ -8,7 +9,7 @@ import SvgCollection from '../../components/svg-collection/svg-collection';
 import { DEFAULT_GENRE, DEFAULT_LEVEL } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getQuests, getQuestsGenreFilter, getQuestsLevelFilter } from '../../store/quests/selectors';
-import { changeActiveGenreFilter } from '../../store/quests/slice';
+import { changeActiveGenreFilter, changeActiveLevelFilter } from '../../store/quests/slice';
 import { Quest } from '../../types/quest';
 
 function MainPage(): JSX.Element {
@@ -19,10 +20,12 @@ function MainPage(): JSX.Element {
   const levelFilter: string = useAppSelector(getQuestsLevelFilter);
 
   const filteredByGenre = genreFilter === DEFAULT_GENRE ? quests : quests.filter((quest) => quest.type === genreFilter);
+
   const filteredByLevel = levelFilter === DEFAULT_LEVEL ? filteredByGenre : filteredByGenre.filter((quest) => quest.level === levelFilter);
 
   useEffect(() => {
     dispatch(changeActiveGenreFilter(DEFAULT_GENRE));
+    dispatch(changeActiveLevelFilter(DEFAULT_LEVEL));
   }, [dispatch]);
 
   return (
@@ -47,7 +50,7 @@ function MainPage(): JSX.Element {
             <div className="page-content__item">
               <FilterList />
             </div>
-            <QuestList quests={filteredByLevel} />
+            {filteredByLevel.length ? <QuestList quests={filteredByLevel} /> : <EmptyQuestsList />}
           </div>
         </main>
 

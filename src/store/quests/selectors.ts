@@ -8,3 +8,4 @@ export const getQuests = (state: State): Quest[] => state[NameSpace.Quests].ques
 export const getQuestsGenreFilter = (state: State): string => state[NameSpace.Quests].activeGenreFilter;
 export const getQuestsLevelFilter = (state: State): string => state[NameSpace.Quests].activeLevelFilter;
 export const getCurrentQuest = (state: State): CurrentQuest => state[NameSpace.Quests].currentQuest;
+export const getIsQuestsDataLoading = (state: State): boolean => state[NameSpace.Quests].isQuestsDataLoading;

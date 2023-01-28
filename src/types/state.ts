@@ -8,6 +8,7 @@ export type QuestsSlice = {
   currentQuest: CurrentQuest,
   activeGenreFilter: string,
   activeLevelFilter: string,
+  isQuestsDataLoading: boolean,
 };
 
 export type UserSlice = {

@@ -23,7 +23,7 @@ export const fetchCurrentQuestAction = createAsyncThunk<CurrentQuest | null, num
   state: State;
   extra: AxiosInstance;
 }>(
-  'data/fetchCurrentOffer',
+  'data/fetchCurrentQuest',
   async (id, { dispatch, extra: api }) => {
     try {
       const { data } = await api.get<CurrentQuest>(`${APIRoute.Quests}/${id}`);
