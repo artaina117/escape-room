@@ -1,13 +1,17 @@
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef } from 'react';
-import { URL_MARKER_DEFAULT } from '../../const';
+import { COMPANY_COORDS, URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
 import useMap from '../../hooks/use-map';
+import { Coords } from '../../types/coords';
 
-const COMPANY_COORDS: [number, number] = [59.96831, 30.31749];
+type MapProps = {
+  points: Coords[];
+  selectedPoint?: Coords;
+  getMarkerCoords?: (coords: Coords) => void;
+}
 
-
-function Map(): JSX.Element {
+function Map({ points, selectedPoint, getMarkerCoords }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, COMPANY_COORDS);
 
@@ -17,19 +21,39 @@ function Map(): JSX.Element {
     iconAnchor: [20, 40],
   });
 
+  const currentCustomIcon = leaflet.icon({
+    iconUrl: URL_MARKER_CURRENT,
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+  });
+
+  const compareCoords = (point: Coords) => {
+    if (selectedPoint) {
+      return point[0] === selectedPoint[0];
+    }
+    return false;
+  };
+
   useEffect(() => {
     if (map) {
-      leaflet
-        .marker({
-          lat: COMPANY_COORDS[0],
-          lng: COMPANY_COORDS[1],
-        }, {
-          icon: defaultCustomIcon,
-        })
-        .addTo(map);
+      points.forEach((point, i) => {
+        leaflet
+          .marker([
+            point[0],
+            point[1],
+          ], {icon: compareCoords(point) ? currentCustomIcon : defaultCustomIcon})
+          .addTo(map)
+          .on('click', () => getMarkerCoords && getMarkerCoords(point));
+      });
     }
-  }, [map]);
-
+    return () => {
+      map?.eachLayer((layer) => {
+        if (layer instanceof leaflet.Marker) {
+          layer.remove();
+        }
+      });
+    };
+  }, [map, points, selectedPoint]);
 
   return (
     <div

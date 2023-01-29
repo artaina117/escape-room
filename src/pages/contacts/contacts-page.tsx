@@ -4,6 +4,7 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
 import SvgCollection from '../../components/svg-collection/svg-collection';
+import { COMPANY_COORDS } from '../../const';
 
 function ContactsPage(): JSX.Element {
   return (
@@ -55,7 +56,7 @@ function ContactsPage(): JSX.Element {
               </dl>
               <div className="contacts__map">
                 <div className="map">
-                  <Map />
+                  <Map points={[COMPANY_COORDS]} />
                 </div>
               </div>
             </div>

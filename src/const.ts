@@ -1,15 +1,18 @@
+import { BookingQuest } from './types/booking-quest';
+import { Coords } from './types/coords';
 import { Genre } from './types/genre';
 
 export const DEFAULT_GENRE = 'all';
 export const DEFAULT_LEVEL = 'any';
 
-export const VIEW_ZOOM = 17;
+export const VIEW_ZOOM = 10;
+export const COMPANY_COORDS: Coords = [59.96831, 30.31749];
 export const URL_MARKER_DEFAULT = '/img/svg/pin-default.svg';
 export const URL_MARKER_CURRENT = '/img/svg/pin-active.svg';
 
 export const REGEX = {
   email: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/gm,
-  password:/([0-9].*[a-z])|([a-z].*[0-9])/,
+  password: /([0-9].*[a-z])|([a-z].*[0-9])/,
 };
 
 export enum AuthorizationStatus {
@@ -25,12 +28,13 @@ export enum AppRoute {
   PersonalBooking = '/my-quests',
   Quest = '/quest',
   Contacts = '/contacts',
-  NotFound = '*',
+  NotFound = '/*',
 }
 
 export enum NameSpace {
   Quests = 'QUESTS',
   User = 'USER',
+  Booking = 'BOOKING',
 }
 
 export enum QuestLevels {
@@ -51,6 +55,7 @@ export enum APIRoute {
   Quests = '/escape-room/quest',
   Login = '/escape-room/login',
   Logout = '/escape-room/logout',
+  Booking = '/booking',
 }
 
 export const questLevelAdapter = {
@@ -133,7 +138,7 @@ export const filterByDifficulty: Record<string, { text: string }> = {
   },
 };
 
-export const currentQuest = {
+export const emptyCurrentQuest = {
   id: 0,
   title: '',
   previewImg: '',
@@ -144,4 +149,23 @@ export const currentQuest = {
   description: '',
   coverImg: '',
   coverImgWebp: '',
+};
+
+export const emptyBookingQuest: BookingQuest = {
+  id: 0,
+  locations: [{
+    id: 0,
+    address: '',
+    coords: [1, 1],
+  }],
+  slots: {
+    today: [{
+      time: '',
+      isAvailable: true,
+    }],
+    tomorrow: [{
+      time: '',
+      isAvailable: true,
+    }],
+  }
 };

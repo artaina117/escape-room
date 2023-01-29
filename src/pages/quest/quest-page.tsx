@@ -11,8 +11,9 @@ import { getCurrentQuest } from '../../store/quests/selectors';
 import { getAuthorizationStatus } from '../../store/user/selectors';
 
 function QuestPage(): JSX.Element {
-  const { id } = useParams();
   const dispatch = useAppDispatch();
+
+  const { id } = useParams();
   const currentQuestId = Number(id);
 
   useEffect(() => {
@@ -58,7 +59,7 @@ function QuestPage(): JSX.Element {
                 </li>
               </ul>
               <p className="quest-page__description">{description}</p>
-              <Link className="btn btn--accent btn--cta quest-page__btn" to={AuthStatus === AuthorizationStatus.Auth ? `${AppRoute.Quest}/:${currentQuestId}${AppRoute.Booking}` : AppRoute.Login}>Забронировать</Link>
+              <Link className="btn btn--accent btn--cta quest-page__btn" to={AuthStatus === AuthorizationStatus.Auth ? `${AppRoute.Quest}/${currentQuestId}${AppRoute.Booking}` : AppRoute.Login}>Забронировать</Link>
             </div>
           </div>
         </main>

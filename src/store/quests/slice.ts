@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { currentQuest, DEFAULT_GENRE, DEFAULT_LEVEL, NameSpace } from '../../const';
+import { emptyCurrentQuest, DEFAULT_GENRE, DEFAULT_LEVEL, NameSpace } from '../../const';
 import { QuestsSlice } from '../../types/state';
 import { fetchCurrentQuestAction, fetchQuestsAction } from './api-actions';
 
 const initialState: QuestsSlice = {
   quests: [],
-  currentQuest: currentQuest,
+  currentQuest: emptyCurrentQuest,
   activeGenreFilter: DEFAULT_GENRE,
   activeLevelFilter: DEFAULT_LEVEL,
   isQuestsDataLoading: false,

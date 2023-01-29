@@ -1,5 +1,6 @@
 import { AuthorizationStatus } from '../const';
 import { store } from '../store';
+import { BookingQuest } from './booking-quest';
 import { CurrentQuest } from './current-quest';
 import { Quest } from './quest';
 
@@ -14,6 +15,10 @@ export type QuestsSlice = {
 export type UserSlice = {
   authorizationStatus: AuthorizationStatus;
   email: string;
+};
+
+export type BookingSlice = {
+  bookingQuest: BookingQuest;
 }
 
 export type State = ReturnType<typeof store.getState>;
