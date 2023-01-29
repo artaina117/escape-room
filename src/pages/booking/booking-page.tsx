@@ -22,7 +22,7 @@ function BookingPage(): JSX.Element {
   const bookingQuest = useAppSelector(getBookingQuest);
   const quest = useAppSelector(getCurrentQuest);
 
-  const { title, coverImg, coverImgWebp } = quest;
+  const { title, coverImg, coverImgWebp, peopleMinMax } = quest;
   const { locations } = bookingQuest;
 
   const coords: Coords[] = [];
@@ -30,12 +30,14 @@ function BookingPage(): JSX.Element {
 
   const [currentAddress, setCurrentAddress] = useState(locations[0].address);
   const [currentCoords, setCurrentCoords] = useState(locations[0].coords);
+  const [currentLocationId, setCurrentLocationId] = useState(locations[0].id);
 
   const getMarkerCoords = (newCoords: Coords): void => {
     locations.forEach((location) => {
       if (newCoords === location.coords) {
         setCurrentAddress(location.address);
         setCurrentCoords(location.coords);
+        setCurrentLocationId(location.id);
       }
     });
   };
@@ -48,6 +50,7 @@ function BookingPage(): JSX.Element {
   useEffect(() => {
     setCurrentAddress(locations[0].address);
     setCurrentCoords(locations[0].coords);
+    setCurrentLocationId(locations[0].id);
   }, [locations]);
 
   return (
@@ -81,7 +84,7 @@ function BookingPage(): JSX.Element {
               </div>
             </div>
 
-            <BookingForm bookingQuest={bookingQuest} />
+            <BookingForm bookingQuest={bookingQuest} locationId={currentLocationId} peopleMinMax={peopleMinMax} />
           </div>
         </main>
 

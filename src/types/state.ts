@@ -5,11 +5,11 @@ import { CurrentQuest } from './current-quest';
 import { Quest } from './quest';
 
 export type QuestsSlice = {
-  quests: Quest[],
-  currentQuest: CurrentQuest,
-  activeGenreFilter: string,
-  activeLevelFilter: string,
-  isQuestsDataLoading: boolean,
+  quests: Quest[];
+  currentQuest: CurrentQuest;
+  activeGenreFilter: string;
+  activeLevelFilter: string;
+  isQuestsDataLoading: boolean;
 };
 
 export type UserSlice = {

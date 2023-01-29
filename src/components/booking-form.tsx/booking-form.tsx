@@ -1,37 +1,66 @@
 import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { REGEX } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { postNewBookingAction } from '../../store/booking/api-actions';
 import { BookingQuest } from '../../types/booking-quest';
+import { NewBooking } from '../../types/new-booking';
 
 type BookingFormProps = {
   bookingQuest: BookingQuest;
   locationId: number;
+  peopleMinMax: number[];
 }
 
-function BookingForm({ bookingQuest, locationId }: BookingFormProps): JSX.Element {
+function BookingForm({ bookingQuest, locationId, peopleMinMax }: BookingFormProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const { slots, id } = bookingQuest;
 
-  const [formData, setFormData] = useState({
-    date: '',
-    time: '',
-    contactPerson: '',
-    phone: '',
-    withChildren: true,
-    peopleCount: 0,
-    locationId: 0,
-    questId: id,
+  const { control, formState: { errors }, handleSubmit } = useForm<NewBooking>({
+    defaultValues: {
+      withChildren: true,
+      locationId: 0,
+      questId: 0,
+    },
+    mode: 'onSubmit',
   });
 
-  const onSubmit = () => {
-    dispatch(postNewBookingAction({
+  const [timeToday, setTimeToday] = useState('');
+  const [timeTommorow, setTimeTommorow] = useState('');
 
-    }))
-  }
+  const todayTimeClickHandler = (time: string) => {
+    setTimeToday(time);
+    setTimeTommorow('');
+  };
+
+  const tommorowTimeClockHandler = (time: string) => {
+    setTimeTommorow(time);
+    setTimeToday('');
+  };
+
+  const onSubmit = (data: NewBooking): void => {
+    const date = timeToday ? 'today' : 'tomorrow';
+    const time = timeToday ? timeToday : timeTommorow;
+
+    if (!Object.keys(errors).length) {
+      dispatch(postNewBookingAction({
+        ...data,
+        peopleCount: Number(data.peopleCount),
+        locationId,
+        questId: id,
+        date,
+        time,
+      }));
+    }
+  };
 
   return (
-    <form className="booking-form" action="https://echo.htmlacademy.ru/" method="post">
+    <form
+      className="booking-form"
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <fieldset className="booking-form__section">
         <legend className="visually-hidden">Выбор даты и времени</legend>
         <fieldset className="booking-form__date-section">
@@ -39,7 +68,7 @@ function BookingForm({ bookingQuest, locationId }: BookingFormProps): JSX.Elemen
           <div className="booking-form__date-inner-wrapper">
 
             {slots.today.map((slot) => (
-              <label className="custom-radio booking-form__date" key={slot.time}>
+              <label className="custom-radio booking-form__date" key={slot.time} onClick={() => todayTimeClickHandler(slot.time)}>
                 <input type="radio" id={`today${slot.time}`} name="date" required value={slot.time} disabled={!slot.isAvailable} />
                 <span className="custom-radio__label">{slot.time}</span>
               </label>)
@@ -53,7 +82,7 @@ function BookingForm({ bookingQuest, locationId }: BookingFormProps): JSX.Elemen
           <div className="booking-form__date-inner-wrapper">
 
             {slots.tomorrow.map((slot) => (
-              <label className="custom-radio booking-form__date" key={slot.time}>
+              <label className="custom-radio booking-form__date" key={slot.time} onClick={() => tommorowTimeClockHandler(slot.time)}>
                 <input type="radio" id={`tomorrow${slot.time}`} name="date" required value={slot.time} disabled={!slot.isAvailable} />
                 <span className="custom-radio__label">{slot.time}</span>
               </label>)
@@ -65,20 +94,64 @@ function BookingForm({ bookingQuest, locationId }: BookingFormProps): JSX.Elemen
 
       <fieldset className="booking-form__section">
         <legend className="visually-hidden">Контактная информация</legend>
+
         <div className="custom-input booking-form__input">
           <label className="custom-input__label" htmlFor="name">Ваше имя</label>
-          <input type="text" id="name" name="name" placeholder="Имя" required pattern="[А-Яа-яЁёA-Za-z'- ]{1,}" />
+          <Controller
+            control={control}
+            rules={{
+              required: { value: true, message: 'Введите имя' },
+              pattern: { value: REGEX.name, message: 'Введите корректное имя' },
+            }}
+            render={({ field }) => (
+              <input type="text" id="name" placeholder="Имя" {...field} />
+            )}
+            name='contactPerson'
+          />
+          <span>{errors.contactPerson?.message}</span>
         </div>
+
         <div className="custom-input booking-form__input">
           <label className="custom-input__label" htmlFor="tel">Контактный телефон</label>
-          <input type="tel" id="tel" name="tel" placeholder="Телефон" required pattern="[0-9]{10,}" />
+          <Controller
+            control={control}
+            rules={{
+              required: { value: true, message: 'Введите номер телефона' },
+              pattern: { value: REGEX.phone, message: 'Введите корректный номер телефона' },
+            }}
+            render={({ field }) => (
+              <input type="tel" id="tel" placeholder="Телефон" {...field} />
+            )}
+            name='phone'
+          />
+          <span>{errors.phone?.message}</span>
         </div>
+
         <div className="custom-input booking-form__input">
           <label className="custom-input__label" htmlFor="person">Количество участников</label>
-          <input type="number" id="person" name="person" placeholder="Количество участников" required />
+          <Controller
+            control={control}
+            rules={{
+              required: { value: true, message: 'Введите количество участников' },
+              validate: (value) => value >= peopleMinMax[0] && value <= peopleMinMax[1] ? undefined : `В этом квесте может участвовать от ${peopleMinMax[0]} до ${peopleMinMax[1]} человек`,
+            }}
+            render={({ field }) => (
+              <input type="number" id="peopleCount" placeholder="Количество участников" {...field} />
+            )}
+            name='peopleCount'
+          />
+          <span>{errors.peopleCount?.message}</span>
         </div>
+
         <label className="custom-checkbox booking-form__checkbox booking-form__checkbox--children">
-          <input type="checkbox" id="children" name="children" defaultChecked />
+          <Controller
+            control={control}
+            render={({ field }) => (
+              <input type="checkbox" id="withChildren" onChange={field.onChange} checked={field.value} />
+            )}
+            name='withChildren'
+          />
+
           <span className="custom-checkbox__icon">
             <svg width="20" height="17" aria-hidden="true">
               <use xlinkHref="#icon-tick"></use>

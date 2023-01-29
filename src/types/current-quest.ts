@@ -1,4 +1,4 @@
-import { QuestLevels, QuestThemes } from '../const'
+import { QuestLevels, QuestThemes } from '../const';
 
 export type CurrentQuest = {
   id: number;

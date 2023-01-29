@@ -13,6 +13,8 @@ export const URL_MARKER_CURRENT = '/img/svg/pin-active.svg';
 export const REGEX = {
   email: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/gm,
   password: /([0-9].*[a-z])|([a-z].*[0-9])/,
+  name: /[А-Яа-яЁёA-Za-z']{1,}/,
+  phone: /[0-9]{10,}/,
 };
 
 export enum AuthorizationStatus {
